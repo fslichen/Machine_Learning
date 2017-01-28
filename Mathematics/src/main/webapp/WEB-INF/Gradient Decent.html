@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	Let g(x) = df(x)/dx
+	x_n = x_n-1 - a * g(x_n-1)
+	If g(x_n-1) > 0, x_n = x_n-1 - a * g(x_n-1) < x_n-1
+	If g(x_n-1) < 0, x_n = x_n-1 - a * g(x_n-1) > x_n-1
+	Therefore, by selecting the appropriate parameter a, the function will
+	reach its local minimal if it has one.
+	This theorem can be applied to a higher dimensional space. 
+	X_n = X_n-1 - a * gradient(X_n-1)
+</body>
+</html>
