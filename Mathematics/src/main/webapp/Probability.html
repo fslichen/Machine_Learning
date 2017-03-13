@@ -12,5 +12,10 @@
 	= E(X) + E(Y)
 	
 	E(X) = E_Y(E_X(X | Y))
+	= E_X(X | Y) = i(-inf, +inf) x * f_X | Y(x | y) * dx
+	= E_Y(E_X(X | Y)) = i(-inf, +inf) (i(-inf, +inf) x * f_X | Y(x | y) * dx) * f_Y(y)* dy
+	= i(-inf, +inf) i(-inf, +inf) x * f_X | Y(x | y) * f_Y(y) * dx * dy
+	= i(-inf, +inf) i(-inf, +inf) x * f_X, Y(x, y) * dx * dy
+	= E(X)
 </body>
 </html>
