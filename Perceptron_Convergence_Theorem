@@ -1,0 +1,42 @@
+define {
+	w as vector;
+	x as vector;
+	y as vector;
+}
+suppose {
+	x[1..n] belong to space I;
+	y[1..n] belong to space II;
+	x[1..n] and y[1..m] are linear separable,
+	there exists w0 such that, 
+	for each x belongs to x[1..n], w0 ^ T * x > 0, 
+	for each y belongs to y[1..m], w0 ^ T * y < 0;
+}
+define adjustment rule as {
+	if w[i] ^ T * x[i] < 0, w[i + 1] = w[i] + x[i];
+	if w[i] ^ T * x[i] > 0, w[i + 1] = w[i];
+	if w[i] ^ T * y[i] > 0, w[i + 1] = w[i] - y[i];
+	if w[i] ^ T * y[i] < 0, w[i + 1] = w[i];
+}
+// You can analyze y[1..m] in the same way.
+suppose none of x[1..n] correctly falls into space I, 
+that is, for each x belongs to x[1..n], w[i] ^ T * x[i] < 0;
+{
+	w[1] ^ T * x[1] < 0 => w[2] = w[1] + x[1];
+	..
+	w[n] ^ T * x[n] < 0 => w[n + 1] = w[n] + x[n];
+} => w[n + 1] = x[n] + .. + x[1];
+// Apply the linear separable assumption.
+w0 ^ T * w[n + 1] = w0 ^ T * x[n] + .. + w0 ^ T * x[1] >= alpha * n, where alpha = min(w0 * x[n] .. w0 * x[1]);
+// Apply Cauchy-Schwarz inequality.
+||w0|| ^ 2 * ||w[n + 1]|| ^ 2 >= (w0 ^ T * w[n + 1]) ^ 2 >= alpha ^ 2 * n ^ 2 => ||w[n + 1]|| ^ 2 >= alpha ^ 2 * n ^ 2 / ||w0|| ^ 2;
+// Apply the assumption that x[1..n] fall into the wrong space. Create ||w[n + 1]|| ^ 2.
+w[i + 1] = w[i] + x[i] => ||w[i + 1]|| ^ 2 = ||w[i]|| ^ 2 + ||x[i]|| ^ 2 + 2 * w[i] * x[i]
+=> ||w[i + 1]|| ^ 2 - ||w[i]|| ^ 2 = ||x[i]|| ^ 2 + 2 * w[i] * x[i] <= ||x[i]|| ^ 2
+=> {
+	||w[2]|| ^ 2 - ||w[1]|| ^ 2 <= ||x[1]|| ^ 2
+	..
+	||w[n + 1]|| ^ 2 - ||w[n]|| ^ 2 <= ||x[n]|| ^ 2
+} => ||w[n + 1]|| ^ 2 - ||w[1]|| ^ 2 <= ||x[n]|| ^ 2 + .. + ||x[1]|| ^ 2 <= beta * n, where beta = max(||x[n]|| ^ 2 .. ||x[1]|| ^ 2);
+w[1] = w[0] + w[0] * x[0] = 0 => ||w[1]|| ^ 2 = 0;
+alpha ^ 2 * n ^ 2 / ||w0|| ^ 2 <= ||w[n + 1]|| ^ 2 <= beta * n => n <= beta * ||w0|| ^ 2 / alpha ^ 2;
+
